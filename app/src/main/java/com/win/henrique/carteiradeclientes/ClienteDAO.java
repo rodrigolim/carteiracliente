@@ -16,16 +16,6 @@ public class ClienteDAO {
         gw = DbGateway.getInstance(ctx);
     }
 
-    public boolean salvar(String nome, String telefone, String email, String descricao, String dtini, String dtfim){
-        ContentValues valores = new ContentValues();
-        valores.put(dbhelper.NOME, nome);
-        valores.put(dbhelper.TELEFONE, telefone);
-        valores.put(dbhelper.EMAIL, email);
-        valores.put(dbhelper.DESCRICAO, descricao);
-        valores.put(dbhelper.DT_INICIO, dtini);
-        valores.put(dbhelper.DT_TERMINO, dtfim);
-        return gw.getDatabase().insert(dbhelper.TAB_CLIENTE, null, valores) > 0;
-    }
 
     public List<Cliente> retornarTodos(){
         List<Cliente> clientes = new ArrayList<>();
@@ -61,6 +51,26 @@ public class ClienteDAO {
 
         return null;
     }
+
+    public boolean salvar(String nome, String telefone, String email, String descricao, String dtini, String dtfim){
+        return salvar(0, nome, telefone, email, descricao, dtini, dtfim);
+    }
+
+    public boolean salvar(int id, String nome, String telefone, String email, String descricao, String dtini, String dtfim){
+        ContentValues valores = new ContentValues();
+        valores.put(dbhelper.NOME, nome);
+        valores.put(dbhelper.TELEFONE, telefone);
+        valores.put(dbhelper.EMAIL, email);
+        valores.put(dbhelper.DESCRICAO, descricao);
+        valores.put(dbhelper.DT_INICIO, dtini);
+        valores.put(dbhelper.DT_TERMINO, dtfim);
+
+        if(id > 0)
+            return gw.getDatabase().update(dbhelper.TAB_CLIENTE, valores, dbhelper.ID+"=?", new String[]{ id + "" }) > 0;
+        else
+            return gw.getDatabase().insert(dbhelper.TAB_CLIENTE, null, valores) > 0;
+    }
+
 
     public boolean excluir(int id){
         return gw.getDatabase().delete(dbhelper.TAB_CLIENTE, dbhelper.ID+"=?", new String[]{ id + "" }) > 0;

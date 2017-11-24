@@ -21,7 +21,8 @@ public class ACTmain extends AppCompatActivity {
     private FloatingActionButton fab;
     private ConstraintLayout LayoutContentMain;
     RecyclerView recyclerView;
-    ClienteAdapter adapter;
+
+    private ClienteAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

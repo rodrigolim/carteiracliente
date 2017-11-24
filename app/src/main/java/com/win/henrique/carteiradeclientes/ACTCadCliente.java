@@ -20,7 +20,6 @@ public class ACTCadCliente extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtDataI;
     private EditText edtDataF;
-    ClienteAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +35,7 @@ public class ACTCadCliente extends AppCompatActivity {
         edtDataF = (EditText)findViewById(R.id.edtDataF);
     }
 
-
+    private ClienteAdapter adapter;
     private void ValidaCampos() {
 
         String nome = edtNome.getText().toString();
@@ -76,12 +75,13 @@ public class ACTCadCliente extends AppCompatActivity {
         }
         else{
             //salvando os dados
+
+
             ClienteDAO dao = new ClienteDAO(getBaseContext());
             boolean sucesso = dao.salvar(nome, telefone, email, projeto, datai, dataf);
             if(sucesso) {
                 Cliente cliente = dao.retornarUltimo();
                 adapter.adicionarCliente(cliente);
-
                // Toast.makeText(this, "Salvou", Toast.LENGTH_SHORT).show();
                // finish();
             }else{
